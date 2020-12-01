@@ -1,16 +1,17 @@
-import { Component, VERSION } from '@angular/core';
+import { Component, VERSION } from "@angular/core";
 
 const DEFAULT_VALUE = 4;
-const MAX_DATA = 100;
+const MAX_DATA = 1000;
 
 @Component({
-  selector: 'my-app',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  selector: "my-app",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
-export class AppComponent  {
+export class AppComponent {
   dataList = [];
   isEnd = false;
+  simulateNetworkSpeed = 0;
 
   constructor() {
     this.initData();
@@ -18,16 +19,17 @@ export class AppComponent  {
 
   onLoadMore(event) {
     // console.log('infinity scroll = ', event);
-    console.log('load more');
+    console.log("load more");
     this.isComplete();
     const currentData = this.getLastData() + 1;
     const addCount = 5;
     const addTotal = this.getLastData() + addCount;
+    this.simulateNetworkSpeed = Math.floor(Math.random()* 2000);
     setTimeout(() => {
-      for (let i = currentData; i < addTotal ; ++ i) {
+      for (let i = currentData; i < addTotal; ++i) {
         this.dataList.push(i);
       }
-    }, 3000);
+    }, this.simulateNetworkSpeed);
   }
 
   onAdd() {
@@ -54,7 +56,7 @@ export class AppComponent  {
   }
 
   private initData() {
-    for (let i = 0 ; i < DEFAULT_VALUE; ++ i) {
+    for (let i = 0; i < DEFAULT_VALUE; ++i) {
       this.dataList.push(i);
     }
   }

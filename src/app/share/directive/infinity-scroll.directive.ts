@@ -9,7 +9,7 @@ import {
   Renderer2
 } from "@angular/core";
 
-const TRACK_ITEM_TAG_NAME = "list-item";
+const TRACK_ITEM_TAG_NAME = "DIV";
 
 @Directive({
   selector: "[infiniteScrollLoadMore]"
@@ -66,6 +66,9 @@ export class InfiniteScrollLoadMoreDirective implements OnInit, OnDestroy {
 
   private intersectionHandler(entry: IntersectionObserverEntry[]) {
     this.isIntersection = entry[0].isIntersecting;
+    if (this.isSending) {
+      return;
+    }
     if (this.isIntersection) {
       this.isSending = true;
       this.loadMore.emit();
@@ -77,6 +80,7 @@ export class InfiniteScrollLoadMoreDirective implements OnInit, OnDestroy {
     const isListChange =
       mutations[mutationsLength - 1].addedNodes[0]?.nodeName ===
       this.trackItemName;
+    this.isSending = false;
     if (this.isIntersection && isListChange) {
       this.isSending = true;
       this.loadMore.emit();
