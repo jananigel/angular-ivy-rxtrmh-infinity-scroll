@@ -1,0 +1,7 @@
+<div #listEle>
+	<div class="list-data" *ngFor="let data of dataList; trackBy: trackByIndex">{{ data }}</div>
+	<div class="infinity-scroll" infiniteScrollLoadMore [listElement]="listEle" [isComplete]="isEnd" (loadMore)="onLoadMore($event)">---- infinity scroll -----</div>
+</div>
+
+<button (click)="onAdd()">Add</button>
+<button (click)="onClear()">Clear</button>
